@@ -7,7 +7,7 @@ import {
   FaUniversity, FaGift, FaBriefcase, FaGraduationCap, FaLaptopCode, FaRegMoneyBillAlt,
   FaBus, FaStethoscope, FaMobileAlt, FaHeart, FaFilm, FaDumbbell, FaHandsHelping,
   FaHospital, FaMoneyCheckAlt, FaUtensils, FaTools, FaShoppingBag, FaUserGraduate,
-  FaWifi, FaRegLaughBeam, FaPiggyBank, FaPeopleCarry, FaDollarSign
+  FaWifi, FaRegLaughBeam, FaPiggyBank, FaPeopleCarry, FaDollarSign, 
 } from "react-icons/fa";
 
 import { MdWork, MdVolunteerActivism, MdSchool, MdOutlineHealthAndSafety } from "react-icons/md";
@@ -104,8 +104,7 @@ const NewEntryModalWindow = ({ isOpen, onClose, onSaveEntry }) => {
   }
 
   // Reset view to start again
-  setShowInput(false);
-  setShowCenterSection(false);
+  setShowInput(true);
   setSelectedEntryType('');
   setAmount('');
   setSelectedCategory('');
@@ -148,6 +147,7 @@ const NewEntryModalWindow = ({ isOpen, onClose, onSaveEntry }) => {
         // Leave showCenterSection alone so it stays true after saving
         setSelectedCategory('');
         setSubCategorySearch('');
+        setShowCenterSection(false);
       }
     }, [isOpen]);
 
@@ -164,10 +164,8 @@ const NewEntryModalWindow = ({ isOpen, onClose, onSaveEntry }) => {
   setAmount(formatted);
 
   const numeric = parseInt(formatted.replace(/,/g, ''), 10);
-  if (!isNaN(numeric) && numeric > 0) {
-    setShowCenterSection(true);
-  } else {
-    setShowCenterSection(false);
+  if (!isNaN(numeric) && numeric > 0 && !showCenterSection) {
+    setShowCenterSection(true); // only show it once, don’t hide again
   }
   };
 
