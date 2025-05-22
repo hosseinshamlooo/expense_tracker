@@ -7,7 +7,7 @@ import {
   FaUniversity, FaGift, FaBriefcase, FaGraduationCap, FaLaptopCode, FaRegMoneyBillAlt,
   FaBus, FaStethoscope, FaMobileAlt, FaHeart, FaFilm, FaDumbbell, FaHandsHelping,
   FaHospital, FaMoneyCheckAlt, FaUtensils, FaTools, FaShoppingBag, FaUserGraduate,
-  FaWifi, FaRegLaughBeam, FaPiggyBank, FaPeopleCarry, FaDollarSign, 
+  FaWifi, FaRegLaughBeam, FaPiggyBank, FaPeopleCarry, FaDollarSign, FaSearch  
 } from "react-icons/fa";
 
 import { MdWork, MdVolunteerActivism, MdSchool, MdOutlineHealthAndSafety } from "react-icons/md";
@@ -300,17 +300,20 @@ const NewEntryModalWindow = ({ isOpen, onClose, onSaveEntry }) => {
 )}
   </div>
 
-  <div className="relative w-72 mt-0.3">
+  <div className="relative w-72 mt-0">
+  {/* Icon positioned inside input */}
+  <FaSearch className="absolute left-3 top-4.5 transform -translate-y-1 text-gold pointer-events-none" />
+  
   <input
     type="text"
     placeholder="Search subcategory..."
-    className="w-full px-4 py-2 bg-black text-gold border-2 border-gold rounded focus:outline-none"
+    className="w-full pl-10 pr-4 py-2 bg-black text-gold border-2 border-gold rounded focus:outline-none"
     value={subCategorySearch}
     onFocus={() => setShowSubDropdown(true)}
-    onBlur={() => setTimeout(() => setShowSubDropdown(false), 100)} // brief delay so click can register
+    onBlur={() => setTimeout(() => setShowSubDropdown(false), 100)}
     onChange={(e) => setSubCategorySearch(e.target.value)}
     disabled={!selectedCategory}
-   />
+  />
                       
 <div className="flex flex-col gap-4 mt-8 items-center">
   <button
