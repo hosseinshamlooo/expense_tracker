@@ -242,7 +242,7 @@ const NewEntryModalWindow = ({ isOpen, onClose, onSaveEntry }) => {
                       </p>
                     )}
 
-                    <div className="flex space-x-4 mt-2">
+                    <div className="flex space-x-4 mt-0.5">
 
                       <button
                         className="px-6 py-2 bg-black text-gold border-2 border-gold font-semibold rounded-full hover-gold-black"
@@ -298,24 +298,44 @@ const NewEntryModalWindow = ({ isOpen, onClose, onSaveEntry }) => {
     })}
   </ul>
 )}
-  </div>
+                    </div>
+                    
+                    <div className="relative w-72">
+  <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gold pointer-events-none" />
 
-  <div className="relative w-72 mt-0">
-  {/* Icon positioned inside input */}
-  <FaSearch className="absolute left-3 top-4.5 transform -translate-y-1 text-gold pointer-events-none" />
-  
   <input
     type="text"
     placeholder="Search subcategory..."
     className="w-full pl-10 pr-4 py-2 bg-black text-gold border-2 border-gold rounded focus:outline-none"
     value={subCategorySearch}
-    onFocus={() => setShowSubDropdown(true)}
-    onBlur={() => setTimeout(() => setShowSubDropdown(false), 100)}
+    onClick={() => setShowSubDropdown(true)} // trigger dropdown
+    onBlur={() => setTimeout(() => setShowSubDropdown(false), 100)} // delay hiding so click can register
     onChange={(e) => setSubCategorySearch(e.target.value)}
     disabled={!selectedCategory}
   />
-                      
-<div className="flex flex-col gap-4 mt-8 items-center">
+
+  {/* Dropdown */}
+  {showSubDropdown && filteredSubCategories.length > 0 && (
+    <ul className="absolute top-full left-0 mt-1 w-full bg-black border-2 border-gold rounded z-20 max-h-60 overflow-y-auto">
+      {filteredSubCategories.map((sub, idx) => (
+        <li
+          key={idx}
+          onMouseDown={() => {
+            setSubCategorySearch(sub);
+            setShowSubDropdown(false);
+          }}
+          className="px-4 py-2 cursor-pointer hover:bg-gold hover:text-black"
+        >
+          {sub}
+        </li>
+      ))}
+    </ul>
+  )}
+</div>
+
+  
+                    
+<div className="flex flex-col gap-4 mt-5 items-center">
   <button
     className="w-24 px-4 py-2 bg-black text-gold border-2 border-gold font-semibold rounded-full hover-gold-black"
     onClick={handleSave}
@@ -333,26 +353,6 @@ const NewEntryModalWindow = ({ isOpen, onClose, onSaveEntry }) => {
   >
     New Entry
   </button>
-</div>
-        
-                      
-
-  {showSubDropdown && filteredSubCategories.length > 0 && (
-    <ul className="absolute mt-1 w-full bg-black border-2 border-gold rounded z-10 max-h-60 overflow-y-auto">
-      {filteredSubCategories.map((sub, idx) => (
-        <li
-          key={idx}
-          onClick={() => {
-            setSubCategorySearch(sub);
-            setShowSubDropdown(false);
-          }}
-          className="px-4 py-2 cursor-pointer hover:bg-gold hover:text-black"
-        >
-          {sub}
-        </li>
-      ))}
-    </ul>
-  )}
 </div>
                   </div>
                 )}
