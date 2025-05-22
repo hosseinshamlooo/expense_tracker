@@ -1,0 +1,101 @@
+const subCategoriesMap = {
+    "Tuition + Fees": [
+      "University tuition",
+      "Exam fees",
+      "Application fees",
+      "Online courses",
+      "Registration fees",
+    ],
+    "Essentials": [
+      "Rent",
+      "Utilities",
+      "Groceries",
+      "Household supplies",
+    ],
+    "Food": [
+      "Groceries",
+      "Restaurants",
+      "Takeout",
+      "Fast food",
+      "Snacks",
+    ],
+    "Uni/School/Course Materials": [
+      "Textbooks",
+      "Notebooks",
+      "Printing",
+      "Software licenses",
+      "Stationery",
+    ],
+    "Tech": [
+      "Laptop",
+      "Phone",
+      "Accessories",
+      "Repairs",
+      "Software",
+    ],
+    "Transportation": [
+      "Public transport",
+      "Gas",
+      "Car maintenance",
+      "Parking fees",
+      "Bike expenses",
+    ],
+    "Medical and Health Expenses": [
+      "Doctor visits",
+      "Medication",
+      "Therapy",
+      "Dentist",
+      "Insurance",
+    ],
+    "Cell Phone + Communication": [
+      "Monthly bill",
+      "Top-ups",
+      "International calls",
+      "Data packages",
+    ],
+    "Personal Care": [
+      "Haircuts",
+      "Skincare",
+      "Toiletries",
+      "Salon/spa",
+    ],
+    "Loan Payments": [
+      "Student loan",
+      "Credit card",
+      "Auto loan",
+      "Buy-now-pay-later",
+    ],
+    "Entertainment and Subscriptions": [
+      "Netflix",
+      "Spotify",
+      "Video games",
+      "Movies",
+      "Events",
+    ],
+    "Fitness and Health": [
+      "Gym membership",
+      "Yoga classes",
+      "Fitness apps",
+      "Trainer fees",
+    ],
+    "Gifts and Holidays": [
+      "Birthday gifts",
+      "Travel",
+      "Holiday shopping",
+      "Decorations",
+    ],
+    "Romance": [
+      "Dates",
+      "Flowers",
+      "Anniversary gifts",
+      "Weekend trips",
+    ],
+    "Emergency Expenses": [
+      "Medical emergency",
+      "Urgent repairs",
+      "Legal fees",
+      "Temporary housing",
+    ],
+  };
+  
+  export default subCategoriesMap;
