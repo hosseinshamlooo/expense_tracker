@@ -1,4 +1,4 @@
-import React, {useState,useEffect} from 'react'
+import React, {useState,useEffect, useMemo} from 'react'
 import { FaWindowClose } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
 import subCategories from "../assets/subCategories.js"
@@ -148,6 +148,7 @@ const NewEntryModalWindow = ({ isOpen, onClose, onSaveEntry }) => {
         setSelectedCategory('');
         setSubCategorySearch('');
         setShowCenterSection(false);
+        
       }
     }, [isOpen]);
 
@@ -182,12 +183,25 @@ const NewEntryModalWindow = ({ isOpen, onClose, onSaveEntry }) => {
     setAmount('');
   };
 
-  const filteredSubCategories = selectedCategory && Array.isArray(subCategories[selectedCategory])
-  ? subCategories[selectedCategory]?.filter((sub) =>
-      sub.toLowerCase().includes(subCategorySearch.toLowerCase())
-    )
-  : [];
 
+
+  useEffect(() => {
+    if (selectedCategory) {
+      const validSubs = subCategories[selectedCategory] || [];
+  
+      if (!validSubs.includes(subCategorySearch)) {
+        setSubCategorySearch('');
+      }
+    }
+  }, [selectedCategory, subCategorySearch]);
+
+
+  const filteredSubCategories = useMemo(() => {
+    const validSubs = subCategories[selectedCategory] || [];
+    return validSubs.filter(sub =>
+      sub.toLowerCase().includes(subCategorySearch.toLowerCase())
+    );
+  }, [selectedCategory, subCategorySearch]);
 
   return (
     <AnimatePresence>
@@ -261,10 +275,13 @@ const NewEntryModalWindow = ({ isOpen, onClose, onSaveEntry }) => {
               </div>
 
               {/* Center Section */}
-              <div className="flex-1 flex flex-col items-center pt-8 px-4 text-gold">
-                {showCenterSection && (
-                  <div className="flex flex-col items-center space-y-4">
-                    <div className="relative w-72">
+              
+              
+<div className="flex-1 flex flex-col items-center pt-8 px-4 text-gold">
+{showCenterSection && (
+<div className="flex flex-col items-center space-y-4">
+<div className="relative w-72">
+  
     <button
       onClick={() => setDropdownOpen(!dropdownOpen)}
       className="w-full px-4 py-2 bg-black text-gold border-2 border-gold rounded focus:outline-none flex justify-between items-center"
@@ -287,8 +304,15 @@ const NewEntryModalWindow = ({ isOpen, onClose, onSaveEntry }) => {
         <li
           key={idx}
           onClick={() => {
-            setSelectedCategory(label);
-            setDropdownOpen(false);
+            const validSubs = subCategories[label] || [];
+
+  // Clear subcategory only if it's not in the new category's list
+  if (!validSubs.includes(subCategorySearch)) {
+    setSubCategorySearch('');
+  }
+
+  setSelectedCategory(label);
+  setDropdownOpen(false);
           }}
           className={`dropdown-item px-4 py-2 cursor-pointer flex items-center gap-3`}
         >
@@ -301,17 +325,16 @@ const NewEntryModalWindow = ({ isOpen, onClose, onSaveEntry }) => {
                     </div>
                     
                     <div className="relative w-72">
-  <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gold pointer-events-none" />
+  <FaSearch className="absolute left-4.5 top-1/2 transform -translate-y-1/2 text-gold" />
 
   <input
     type="text"
     placeholder="Search subcategory..."
     className="w-full pl-10 pr-4 py-2 bg-black text-gold border-2 border-gold rounded focus:outline-none"
     value={subCategorySearch}
+    onChange={(e) => setSubCategorySearch(e.target.value)} 
     onClick={() => setShowSubDropdown(true)} // trigger dropdown
-    onBlur={() => setTimeout(() => setShowSubDropdown(false), 100)} // delay hiding so click can register
-    onChange={(e) => setSubCategorySearch(e.target.value)}
-    disabled={!selectedCategory}
+    onBlur={() => setTimeout(() => setShowSubDropdown(false), 200)} // delay hiding so click can register
   />
 
   {/* Dropdown */}
@@ -321,8 +344,8 @@ const NewEntryModalWindow = ({ isOpen, onClose, onSaveEntry }) => {
         <li
           key={idx}
           onMouseDown={() => {
-            setSubCategorySearch(sub);
-            setShowSubDropdown(false);
+          setSubCategorySearch(sub);
+          setShowSubDropdown(false);
           }}
           className="px-4 py-2 cursor-pointer hover:bg-gold hover:text-black"
         >
